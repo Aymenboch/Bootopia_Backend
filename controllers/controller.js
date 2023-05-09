@@ -129,9 +129,31 @@ const login = async (req, res, next) => {
     );
   };
 
+  const booking = async  (req, res, next) => {
+    console.log(req.body)
+                db.query(
+                  `INSERT INTO BookingRoom (workingSpace, room, date, time, person, note) VALUES ('${req.body.workingSpace}',
+                  '${req.body.room}','${req.body.date}','${req.body.time}', '${req.body.person}', '${req.body.note}') `,
+                  (err, result) => {
+                    if (err) {
+                      console.log("fail")
+                      throw err;
+                      return res.status(400).send({
+                        msg: err
+                      });
+                    }
+                    return res.status(201).send({
+                      msg: 'Registered!', 
+                    });
+                  }
+                );
+              }
+  
+
   module.exports = {
     login,
     signUp,
     secretRoute,
     getUsers,
+    booking
   }
